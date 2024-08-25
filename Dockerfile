@@ -13,6 +13,7 @@ RUN apt-get update -qq && \
   libpq-dev \
   vim \
   postgresql-client \
+  libvips42 \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
