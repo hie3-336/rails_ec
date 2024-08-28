@@ -75,7 +75,7 @@ RSpec.describe '/tasks', type: :request do
       it 'does not create a new Task' do
         expect do
           post tasks_url, params: { task: invalid_attributes }
-        end.to change(Task, :count).by(0)
+        end.not_to change(Task, :count)
       end
 
       it "renders a response with 422 status (i.e. to display the 'new' template)" do

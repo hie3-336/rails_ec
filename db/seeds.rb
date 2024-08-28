@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -11,7 +12,7 @@
 
 # item.image.attach(io: File.open('db/testimage/test.png'), filename: 'test.png')
 # item.save!
-require "csv"
+require 'csv'
 
 CSV.foreach('db/seeds.csv', headers: true) do |row|
   item = Item.create(

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :items, only: [:index, :show]
+  resources :items, only: %i[index show]
   # get 'items', to: 'items#index'
   # get 'items/:id', to: 'items#show'
   resources :tasks
