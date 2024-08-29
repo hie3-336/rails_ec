@@ -16,8 +16,7 @@
         <div class="col mb-5">
           <div class="card h-100">
             <!-- Product image-->
-            <%# <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." /> %>
-            <%= image_tag item.image.representation(resize_to_fill: [450, 300]) %>
+            <%= link_to image_tag(item.image.representation(resize_to_fill: [450, 300]), class:"card-img-top"), item %>
             <!-- Product details-->
             <div class="card-body p-4">
               <div class="text-center">
@@ -30,7 +29,8 @@
             <!-- Product actions-->
             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center"><a>
-                  <%= link_to "詳細", item, class: "btn btn-outline-dark mt-auto" %>
+                <a class="btn btn-outline-dark mt-auto" href="#">カートに入れる
+                <%# <%= link_to "カートに入れる", item, class: "btn btn-outline-dark mt-auto" %>
                 </a></div>
             </div>
           </div>
