@@ -7,3 +7,31 @@
     </div>
   </div>
 </header>
+
+<div class="p-5">
+  <table class="table table-hover">
+    <thead class="thead">
+      <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>description</th>
+        <th>price</th>
+        <th>number</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <td><%= item.id %></td>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+          <td><%= item.price %></td>
+          <td><%= item.number %></td>
+          <td><%= link_to "編集", item, class: "btn btn-primary mr-3" %></td>
+          <td><%= link_to "削除", item, class: "btn btn-danger" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
