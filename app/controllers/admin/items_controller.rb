@@ -9,13 +9,10 @@ class Admin::ItemsController < ApplicationController
   end
 
   def new
+    @item = Item.new
   end
 
   def edit
-  end
-
-  def show
-    @item = Item.find(params[:id])
   end
 
   def update
