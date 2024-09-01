@@ -35,25 +35,7 @@
     <h2 class="fw-bolder mb-4">最近入荷された商品</h2>
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <% @items.last(4).reverse_each do |item| %>
-        <div class="col mb-5">
-          <div class="card h-100">
-            <!-- Product image-->
-            <%= link_to image_tag(item.image.representation(resize_to_fill: [450, 300]), class:"card-img-top"), item %>
-            <!-- Product details-->
-            <div class="card-body p-4">
-              <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder"><%= item.name %></h5>
-                <!-- Product price-->
-                <%= item.price %>円
-              </div>
-            </div>
-            <!-- Product actions-->
-            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <a class="btn btn-outline-dark mt-auto" href="#">カートに入れる</a>
-            </div>
-          </div>
-        </div>
+        <%= render partial: "items", locals: { item: item } %>
       <% end %>
     </div>
   </div>
