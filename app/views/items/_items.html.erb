@@ -1,0 +1,24 @@
+
+<div class="col mb-5">
+  <div class="card h-100">
+    <!-- Product image-->
+    <%= link_to image_tag(item.image.representation(resize_to_fill: [450, 300]), class:"card-img-top"), item %>
+    <!-- Product details-->
+    <div class="card-body p-4">
+      <div class="text-center">
+        <!-- Product name-->
+        <h5 class="fw-bolder"><%= item.name %></h5>
+        <!-- Product price-->
+        <%= item.price %> 円
+      </div>
+    </div>
+    <!-- Product actions-->
+    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+      <div class="text-center">
+        <a class="btn btn-outline-dark mt-auto" href="#">カートに入れる
+          <%# <%= link_to "カートに入れる", item, class: "btn btn-outline-dark mt-auto" %>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
