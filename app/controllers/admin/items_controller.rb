@@ -29,6 +29,14 @@ class Admin::ItemsController < ApplicationController
   end
 
   def destroy
+    item = Item.find(params[:id])
+    item.destroy
+
+    respond_to do |format|
+      format.html {redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。", status: :see_other}
+      format.json { head :no_content}
+    end
+    # redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。"
   end
 
   private
