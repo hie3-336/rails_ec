@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Admin::ItemsController < ApplicationController
+
+  before_action :basic_auth
+
   def index
     @items = Item.all
   end
@@ -46,4 +49,11 @@ class Admin::ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:name, :description, :price, :number, :image)
   end
+
+  def basic_auth
+    authenticate_or_request_with_http_basic do |username, password|
+      username == ENV["BASIC_AUTH_USER"] && password == ENV["BASIC_AUTH_PASSWORD"]
+    end
+  end
+
 end
