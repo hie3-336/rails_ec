@@ -5,7 +5,7 @@ class Admin::ItemsController < ApplicationController
   before_action :basic_auth
 
   def index
-    @items = Item.all
+    @items = Item.all.order(id: :asc)
   end
 
   def create
