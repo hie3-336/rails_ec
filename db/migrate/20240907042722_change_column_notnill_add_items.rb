@@ -1,8 +1,12 @@
+# frozen_string_literal: true
+
 class ChangeColumnNotnillAddItems < ActiveRecord::Migration[7.0]
-  def change
-    change_column :items, :name, :string, null: false
-    change_column :items, :description, :string, null: false
-    change_column :items, :price, :integer, null: false
-    change_column :items, :number, :string, null: false
+  def chenge
+    chenge_table :items, bulk: true do |t|
+      t.string :name, null: false
+      t.string :description, null: false
+      t.integer :price, null: false
+      t.string :number, null: false
+    end
   end
 end

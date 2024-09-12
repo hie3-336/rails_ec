@@ -1,59 +1,58 @@
 # frozen_string_literal: true
 
-class Admin::ItemsController < ApplicationController
+module Admin
+  class ItemsController < ApplicationController
+    before_action :basic_auth
 
-  before_action :basic_auth
-
-  def index
-    @items = Item.all.order(id: :asc)
-  end
-
-  def create
-    @item = Item.new(item_params)
-    if @item.save
-      redirect_to admin_items_url, notice: "商品「#{@item.name}」を登録しました！"
-    else
-      render :new, status: :unprocessable_entity
+    def index
+      @items = Item.all.order(id: :asc)
     end
 
-  end
+    def create
+      @item = Item.new(item_params)
+      if @item.save
+        redirect_to admin_items_url, notice: "商品「#{@item.name}」を登録しました！"
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
 
-  def new
-    @item = Item.new
-  end
+    def new
+      @item = Item.new
+    end
 
-  def edit
-    @item = Item.find(params[:id])
-  end
+    def edit
+      @item = Item.find(params[:id])
+    end
 
-  def update
-    item = Item.find(params[:id])
-    if item.update(item_params)
+    def update
+      item = Item.find(params[:id])
+      return unless item.update(item_params)
+
       redirect_to admin_items_url, notice: "商品「#{item.name}」を更新しました！"
     end
-  end
 
-  def destroy
-    item = Item.find(params[:id])
-    item.destroy
+    def destroy
+      item = Item.find(params[:id])
+      item.destroy
 
-    respond_to do |format|
-      format.html {redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。", status: :see_other}
-      format.json {head :no_content}
+      respond_to do |format|
+        format.html { redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。", status: :see_other }
+        format.json { head :no_content }
+      end
+      # redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。"
     end
-    # redirect_to admin_items_url, notice: "商品「#{item.name}」を削除しました。"
-  end
 
-  private
+    private
 
-  def item_params
-    params.require(:item).permit(:name, :description, :price, :number, :image)
-  end
+    def item_params
+      params.require(:item).permit(:name, :description, :price, :number, :image)
+    end
 
-  def basic_auth
-    authenticate_or_request_with_http_basic do |username, password|
-      username == ENV["BASIC_AUTH_USER"] && password == ENV["BASIC_AUTH_PASSWORD"]
+    def basic_auth
+      authenticate_or_request_with_http_basic do |username, password|
+        username == ENV['BASIC_AUTH_USER'] && password == ENV['BASIC_AUTH_PASSWORD']
+      end
     end
   end
-
 end
