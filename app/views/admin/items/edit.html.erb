@@ -6,7 +6,7 @@
     </div>
   </div>
 </header>
-<%= render partial: 'layouts/errormessage', locals: { model: @item } %>
+<%= render partial: 'layouts/error_message', locals: { model: @item } %>
 <div class="p-3">
   <%= form_with url: admin_item_path, model: @item do |form| %>
     <div class="form-label">商品名</div>
