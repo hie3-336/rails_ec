@@ -26,10 +26,12 @@ module Admin
     end
 
     def update
-      item = Item.find(params[:id])
-      return unless item.update(item_params)
-
-      redirect_to admin_items_url, notice: "商品「#{item.name}」を更新しました！"
+      @item = Item.find(params[:id])
+      if @item.update(item_params)
+        redirect_to admin_items_url, notice: "商品「#{@item.name}」を更新しました！"
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
 
     def destroy
