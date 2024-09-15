@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :items, only: %i[index show]
 
   namespace :admin do
-    resources :items, only: %i[index create new edit update destroy]
+    resources :items, except: %i[show]
   end
 
   resources :tasks
