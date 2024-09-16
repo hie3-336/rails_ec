@@ -1,0 +1,24 @@
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">商品新規作成</h1>
+    </div>
+  </div>
+</header>
+<%= render partial: 'layouts/error_message', locals: { model: @item } %>
+<div class="p-3">
+  <%= form_with url: admin_items_path, model: @item do |form| %>
+    <div class="form-label">商品名</div>
+    <%= form.text_field :name, class: "form-control" %>
+    <div class="form-label">説明</div>
+    <%= form.text_area :description, class: "form-control" %>
+    <div class="form-label">価格</div>
+    <%= form.text_field :price, class: "form-control" %>
+    <div class="form-label">型番</div>
+    <%= form.text_field :number, class: "form-control" %>
+    <div class="form-label">商品画像(添付)</div>
+    <%= form.file_field :image, class: "form-control" %>
+    <%= form.submit "登録する", class: "btn btn-primary mt-3" %>
+  <% end %>
+</div>

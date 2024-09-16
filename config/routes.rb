@@ -2,8 +2,11 @@
 
 Rails.application.routes.draw do
   resources :items, only: %i[index show]
-  # get 'items', to: 'items#index'
-  # get 'items/:id', to: 'items#show'
+
+  namespace :admin do
+    resources :items, except: %i[show]
+  end
+
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'items#index'

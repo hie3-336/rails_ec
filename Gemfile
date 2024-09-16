@@ -56,6 +56,12 @@ gem 'image_processing', '~> 1.2'
 # Active storage S3アップロード用
 gem 'aws-sdk-s3', '~> 1.2'
 
+# 日本語化に使用
+gem 'rails-i18n'
+
+# 環境変数管理
+gem 'dotenv-rails'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
