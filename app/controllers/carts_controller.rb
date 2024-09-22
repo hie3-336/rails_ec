@@ -6,7 +6,8 @@ class CartsController < ApplicationController
   end
 
   def my_cart
-    @cart_items = current_cart.cart_items
+    @cart_items = current_cart.cart_items.includes(:item)
+
   end
 
   def add_item

@@ -19,10 +19,13 @@
 						<% @cart_items.each do |cart_item| %>
 							<li class="list-group-item d-flex justify-content-between lh-condensed">
 								<div>
-									<h6 class="my-0">Product name</h6>
-									<small class="text-muted">Brief description</small>
+									<h6 class="my-0"><%= cart_item.item.name %></h6>
+                  <h6 class="text-muted">数量：<%= cart_item.count %> 点</h6>
 								</div>
-								<span class="text-muted"><%= cart_item.count %></span>
+                <div>
+                  <small class="text-muted">単価：<%= cart_item.item.price %> 円</small>
+                  <h6 class="text-muted">小計：<%= cart_item.item.price * cart_item.count %>円</h6>
+                </div>
 							</li>
 						<% end %>
             
