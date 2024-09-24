@@ -11,12 +11,6 @@ class CartsController < ApplicationController
   end
 
   def add_item
-    # if session[:cart_id]
-    #   @cart = Cart.find(session[:cart_id])
-    # else
-    #   @cart = Cart.create
-    #   session[:cart_id] = @cart.id
-    # end
     if current_cart.cart_items.find_by(item_id: params[:item_id])
       @cart_item = current_cart.cart_items.find_by(item_id: params[:item_id])
     else
@@ -24,7 +18,7 @@ class CartsController < ApplicationController
     end
 
     @cart_item.count ||= 0
-    @cart_item.count += 1
+    @cart_item.count += params[:add_item_count].to_i
 
     @cart_item.save
   end

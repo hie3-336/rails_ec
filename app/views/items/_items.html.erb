@@ -14,7 +14,7 @@
     <!-- Product actions-->
     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
       <div class="text-center">
-        <%= link_to "カートに入れる", "/add_item/#{item.id}", class: "btn btn-outline-dark mt-auto", data: { "turbo-method": :post } %>
+        <%= link_to "カートに入れる", add_item_path(item_id: item.id, add_item_count: "1"), class: "btn btn-outline-dark mt-auto", data: { "turbo-method": :post } %>
       </div>
     </div>
   </div>

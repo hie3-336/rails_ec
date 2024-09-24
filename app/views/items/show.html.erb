@@ -19,11 +19,11 @@
           <%= @item.description %>
         </p>
         <div class="d-flex">
-          <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-          <button class="btn btn-outline-dark flex-shrink-0" type="button">
+          <%= form_with url: add_item_path(@item.id) do |form| %>
+            <%= form.text_field :add_item_count, class: "form-control text-center me-3" ,style: "max-width: 3rem" ,value: "1" %>
             <i class="bi-cart-fill me-1"></i>
-            カートに入れる
-          </button>
+            <%= form.submit "カートに入れる", class: "btn btn-outline-dark mt-auto"%>
+          <% end %>
         </div>
       </div>
     </div>
