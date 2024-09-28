@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CartsController < ApplicationController
-
-
   def my_cart
     @cart_items = current_cart.cart_items.includes(:item)
   end
