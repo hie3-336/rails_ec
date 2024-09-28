@@ -13,8 +13,11 @@ class CartsController < ApplicationController
     @cart_item ||= current_cart.cart_items.build(item_id: params[:item_id])
     @cart_item.count ||= 0
     @cart_item.count += params[:add_item_count].to_i
-    @cart_item.save
-
+    if @cart_item.save
+      redirect_to request.referer, notice: "商品をカートに追加しました。"
+    else
+      redirect_to request.referer, notice: "カートの商品追加に失敗しました。"
+    end
   end
 
   def create
