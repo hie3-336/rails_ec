@@ -10,9 +10,6 @@ Rails.application.routes.draw do
     resources :items, except: %i[show]
   end
 
-  # 以下削除予定？
-  resources :carts, only: %i[show create destroy]
-
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   root 'items#index'
