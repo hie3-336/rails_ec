@@ -6,8 +6,6 @@ class CartsController < ApplicationController
   end
 
   def add_item
-    # @cart_item = current_cart.cart_items.find_by(item_id: params[:item_id])
-    # @cart_item ||= current_cart.cart_items.build(item_id: params[:item_id])
     @cart_item ||= current_cart.cart_items.find_or_initialize_by(item_id: params[:item_id])
     @cart_item.count ||= 0
     @cart_item.count += params[:add_item_count].to_i
@@ -29,8 +27,6 @@ class CartsController < ApplicationController
   private
 
   def current_cart
-    # current_cart = Cart.find_by(id: session[:cart_id])
-    # current_cart ||= Cart.create
     current_cart = Cart.find_or_create_by(id: session[:cart_id])
     session[:cart_id] = current_cart.id
     current_cart
