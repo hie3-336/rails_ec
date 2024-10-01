@@ -3,6 +3,7 @@
 class CartsController < ApplicationController
   def my_cart
     @cart_items = current_cart.cart_items.includes(:item)
+    @purchase = Purchase.new
   end
 
   def add_item
@@ -24,11 +25,24 @@ class CartsController < ApplicationController
     end
   end
 
+  def checkout
+    @purchase = Purchase.new(purchase_params)
+    if @purchase.save
+      redirect_to root_path, notice: "商品購入ありがとうございます！"
+    else
+      render :my_cart, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def current_cart
     current_cart = Cart.find_or_create_by(id: session[:cart_id])
     session[:cart_id] = current_cart.id
     current_cart
+  end
+
+  def purchase_params
+    params.require(:purchase).permit(:first_name, :last_name, :user_name, :mail, :address, :apart, :card_name, :card_number, :card_expiration, :card_cvv)
   end
 end

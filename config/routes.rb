@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   post '/add_item/:item_id', to: 'carts#add_item', as: :add_item
   get '/my_cart', to: 'carts#my_cart'
   get '/delete_cart', to: 'carts#delete_cart'
+  post '/checkout', to: 'carts#checkout'
   # Defines the root path route ("/")
   # root "articles#index"
 end
