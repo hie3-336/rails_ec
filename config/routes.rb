@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :items, except: %i[show]
+    resources :purchases, only: %i[index show]
   end
 
   resources :tasks
