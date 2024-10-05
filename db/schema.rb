@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_09_29_085634) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_04_160302) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_29_085634) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "purchase_ditails", force: :cascade do |t|
+    t.bigint "purchase_id", null: false
+    t.string "name", null: false
+    t.integer "price", null: false
+    t.integer "count", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["purchase_id"], name: "index_purchase_ditails_on_purchase_id"
+  end
+
   create_table "purchases", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -93,4 +103,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_09_29_085634) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "items"
+  add_foreign_key "purchase_ditails", "purchases"
 end

@@ -27,10 +27,14 @@ class CartsController < ApplicationController
 
   def checkout
     @purchase = Purchase.new(purchase_params)
+    @cart_items = current_cart.cart_items.includes(:item)
+    @cart_items.each do |cart_item|
+      @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)
+    end
     if @purchase.save
       redirect_to root_path, notice: "商品購入ありがとうございます！"
     else
-      render :my_cart, status: :unprocessable_entity
+      render :my_cart, status: :unprocessable_entity, notice: "商品購入に失敗しました。"
     end
   end
 
