@@ -10,6 +10,7 @@ module Admin
 
     def show
       @purchase = Purchase.find(params[:id])
+      @purchase_ditails = @purchase.purchase_ditails
     end
 
     private
