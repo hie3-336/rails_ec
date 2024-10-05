@@ -1,5 +1,6 @@
 <body class="bg-light">
   <div class="container">
+    <%= render partial: 'layouts/error_message', locals: { model: @purchase } %>
     <div class="py-5 text-center">
       <h2>購入確認画面</h2>
       <p class="lead">必要情報を入力後、よろしければ「購入を確定する」を選択してください。</p>

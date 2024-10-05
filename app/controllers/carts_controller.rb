@@ -31,6 +31,10 @@ class CartsController < ApplicationController
     @cart_items.each do |cart_item|
       @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)
     end
+    if @purchase.purchase_ditails == []
+      flash.now[:notice] = 'カートには少なくとも商品を一つ追加してください。'
+      render :my_cart, status: :unprocessable_entity and return
+    end
     if @purchase.save
       redirect_to root_path, notice: "商品購入ありがとうございます！"
     else
