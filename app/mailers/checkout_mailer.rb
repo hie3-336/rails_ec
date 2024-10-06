@@ -3,6 +3,6 @@ class CheckoutMailer < ApplicationMailer
 
   def ordermail(purchase)
     @purchase = purchase
-    mail(to: "送信先のメールアドレス", subject: "注文完了のお知らせ")
+    mail(to: @purchase.mail, subject: "注文完了のお知らせ")
   end
 end
