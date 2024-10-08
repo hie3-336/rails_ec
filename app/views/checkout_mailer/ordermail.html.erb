@@ -6,8 +6,68 @@
   <body>
     <h1>ご注文いただきありがとうございます</h1>
     <h3>hie's shop</h3>
-    <p>
-      test
-    </p>
+
+    <h3>購入者詳細</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>項目名</th>
+          <th>詳細</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>購入ID</th>
+          <td><%= @purchase.id %></td>
+        </tr>
+        <tr>
+          <th>性</th>
+          <td><%= @purchase.first_name %></td>
+        </tr>
+        <tr>
+          <th>名</th>
+          <td><%= @purchase.last_name %></td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td><%= @purchase.mail %></td>
+        </tr>
+        <tr>
+          <th>住所</th>
+          <td><%= @purchase.address %></td>
+        </tr>
+        <tr>
+          <th>マンション名</th>
+          <td><%= @purchase.apart %></td>
+        </tr>
+        <tr>
+          <th>購入日時</th>
+          <td><%= @purchase.created_at %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div> 
+      <h3>購入内容明細</h3>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>商品名</th>
+          <th>価格</th>
+          <th>購入数量</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @purchase.purchase_ditails.each do |purchase_ditail| %>
+          <tr>
+            <td><%= purchase_ditail.name %></td>
+            <td><%= purchase_ditail.price %></td>
+            <td><%= purchase_ditail.count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </body>
 </html>
