@@ -37,6 +37,7 @@ class CartsController < ApplicationController
     end
     if @purchase.save
       CheckoutMailer.ordermail(@purchase).deliver_now
+      current_cart.destroy
       redirect_to root_path, notice: "商品購入ありがとうございます！"
     else
       render :my_cart, status: :unprocessable_entity, notice: "商品購入に失敗しました。"
