@@ -2,24 +2,25 @@
 <html>
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      table {
+        border: 2px solid #333;
+      }
+
+      th, td {
+        border: 1px solid #949494;
+        text-align: left;
+      }
+    </style>
   </head>
   <body>
+    <% price_total = 0 %>
     <h1>ご注文いただきありがとうございます</h1>
     <h3>hie's shop</h3>
 
-    <h3>購入者詳細</h3>
+    <h3>購入者情報</h3>
     <table>
-      <thead>
-        <tr>
-          <th>項目名</th>
-          <th>詳細</th>
-        </tr>
-      </thead>
       <tbody>
-        <tr>
-          <th>購入ID</th>
-          <td><%= @purchase.id %></td>
-        </tr>
         <tr>
           <th>性</th>
           <td><%= @purchase.first_name %></td>
@@ -57,6 +58,7 @@
           <th>商品名</th>
           <th>価格</th>
           <th>購入数量</th>
+          <th>小計</th>
         </tr>
       </thead>
       <tbody>
@@ -65,9 +67,14 @@
             <td><%= purchase_ditail.name %></td>
             <td><%= purchase_ditail.price %></td>
             <td><%= purchase_ditail.count %></td>
+            <td><%= price_subtotal = purchase_ditail.price * purchase_ditail.count %></td>
           </tr>
+          <% price_total += price_subtotal %>
         <% end %>
       </tbody>
     </table>
+    <p class="h5">合計：<%= price_total %>円</p>
   </body>
+
+
 </html>
