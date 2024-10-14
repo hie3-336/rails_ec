@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Purchase < ApplicationRecord
-  has_many :purchase_ditails
+  has_many :purchase_ditails, dependent: :nullify
 
   validates :first_name, presence: true
   validates :last_name, presence: true

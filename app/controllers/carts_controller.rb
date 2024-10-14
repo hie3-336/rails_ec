@@ -38,9 +38,9 @@ class CartsController < ApplicationController
     if @purchase.save
       CheckoutMailer.ordermail(@purchase).deliver_now
       current_cart.destroy
-      redirect_to root_path, notice: "商品購入ありがとうございます！"
+      redirect_to root_path, notice: '商品購入ありがとうございます！'
     else
-      render :my_cart, status: :unprocessable_entity, notice: "商品購入に失敗しました。"
+      render :my_cart, status: :unprocessable_entity, notice: '商品購入に失敗しました。'
     end
   end
 
@@ -53,6 +53,7 @@ class CartsController < ApplicationController
   end
 
   def purchase_params
-    params.require(:purchase).permit(:first_name, :last_name, :user_name, :mail, :address, :apart, :card_name, :card_number, :card_expiration, :card_cvv)
+    params.require(:purchase).permit(:first_name, :last_name, :user_name, :mail, :address, :apart, :card_name,
+                                     :card_number, :card_expiration, :card_cvv)
   end
 end
