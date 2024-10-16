@@ -9,8 +9,7 @@ module Admin
     end
 
     def show
-      @purchase = Purchase.find(params[:id])
-      @purchase_ditails = @purchase.purchase_ditails
+      @purchase = Purchase.includes(:purchase_ditails).find(params[:id])
     end
 
     private
