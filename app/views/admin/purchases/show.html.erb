@@ -1,0 +1,77 @@
+<% price_total = 0 %>
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">購入明細ページ</h1>
+    </div>
+  </div>
+</header>
+<div class="m-5 container">
+  <p class="h1">購入者詳細</p>
+</div>
+<table class="table table-striped table-bordered table-hover table-condensed m-5 container">
+  <thead>
+    <tr>
+      <th scope="col">項目名</th>
+      <th scope="col">詳細</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">購入ID</th>
+      <td><%= @purchase.id %></td>
+    </tr>
+    <tr>
+      <th scope="row">性</th>
+      <td><%= @purchase.first_name %></td>
+    </tr>
+    <tr>
+      <th scope="row">名</th>
+      <td><%= @purchase.last_name %></td>
+    </tr>
+    <tr>
+      <th scope="row">メールアドレス</th>
+      <td><%= @purchase.mail %></td>
+    </tr>
+    <tr>
+      <th scope="row">住所</th>
+      <td><%= @purchase.address %></td>
+    </tr>
+    <tr>
+      <th scope="row">マンション名</th>
+      <td><%= @purchase.apart %></td>
+    </tr>
+    <tr>
+      <th scope="row">購入日時</th>
+      <td><%= @purchase.created_at %></td>
+    </tr>
+  </tbody>
+</table>
+<div class="m-5 container">
+  <p class="h1">購入内容明細</p>
+</div>
+<table class="table table-striped table-bordered table-hover table-condensed m-5 container">
+  <thead>
+    <tr>
+      <th scope="col">商品名</th>
+      <th scope="col">単価</th>
+      <th scope="col">購入数量</th>
+      <th scope="col">小計</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @purchase.purchase_ditails.each do |purchase_ditail| %>
+      <tr>
+        <td><%= purchase_ditail.name %></td>
+        <td><%= purchase_ditail.price %></td>
+        <td><%= purchase_ditail.count %></td>
+        <td><%= price_subtotal = purchase_ditail.price * purchase_ditail.count %></td>
+      </tr>
+      <% price_total += price_subtotal %>
+    <% end %>
+  </tbody>
+</table>
+<div class="m-5 container">
+  <p class="h5">合計：<%= price_total %>円</p>
+</div>
