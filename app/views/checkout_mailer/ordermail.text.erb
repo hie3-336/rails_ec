@@ -1,0 +1,25 @@
+<% price_total = 0 %>
+ご注文いただきありがとうございます
+
+■■購入者情報■■
+性：<%= @purchase.first_name %>
+名：<%= @purchase.last_name %>
+メールアドレス：<%= @purchase.mail %>
+住所：<%= @purchase.address %>
+マンション名：<%= @purchase.apart %>
+購入日時：<%= @purchase.created_at %>
+
+■■購入明細■■
+
+<% @purchase.purchase_ditails.each do |purchase_ditail| %>
+商品名：<%= purchase_ditail.name %>
+価格：<%= purchase_ditail.price %>
+購入数量：<%= purchase_ditail.count %>
+小計：<%= price_subtotal = purchase_ditail.price * purchase_ditail.count %>
+<% price_total += price_subtotal %>
+-------------
+<% end %>
+
+合計：<%= price_total %>
+
+hie's shop
