@@ -26,6 +26,12 @@
             </li>
             <% price_total += price_subtotal %>
           <% end %>
+          <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+            <div class="text-success">
+              <h6 class="my-0">クーポン</h6>
+            </div>
+            <span class="text-success">−$5</span>
+          </li>
           <li class="list-group-item d-flex justify-content-between">
             <span>合計</span>
             <strong><%= price_total %>円</strong>
@@ -125,7 +131,7 @@
             </div>
           </div>
           <hr class="mb-4">
-          <%= form.submit "登録する", class: "btn btn-primary btn-lg btn-block" %>
+          <%= form.submit "購入を確定する", class: "btn btn-primary btn-lg btn-block" %>
         <% end %>
       </div>
     </div>
