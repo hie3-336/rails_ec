@@ -1,0 +1,32 @@
+<!-- Header-->
+<header class="bg-dark py-5">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="text-center text-white">
+      <h1 class="display-4 fw-bolder">購入一覧ページ</h1>
+    </div>
+  </div>
+</header>
+<div class="p-3">
+  <table class="table table-hover">
+    <thead class="thead">
+      <tr>
+        <th>購入ID</th>
+        <th>性</th>
+        <th>名</th>
+        <th>メールアドレス</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @purchases.each do |purchase| %>
+        <tr>
+          <td><%= purchase.id %></td>
+          <td><%= purchase.first_name %></td>
+          <td><%= purchase.last_name %></td>
+          <td><%= purchase.mail %></td>
+          <td><%= link_to "詳細", admin_purchase_path(purchase), class: "btn btn-primary mr-3" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
