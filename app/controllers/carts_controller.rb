@@ -2,8 +2,8 @@
 
 class CartsController < ApplicationController
   def my_cart
-    @cart_items = current_cart.cart_items.includes(:item)
     @purchase = Purchase.new
+    @cart_items = current_cart.cart_items.includes(:item)
   end
 
   def add_item
@@ -26,24 +26,20 @@ class CartsController < ApplicationController
   end
 
   def apply_coupon
-    # @coupon = Coupon.find_by(code: params[:code])
-    # if @coupon.cart_id
-    #   flash.now[:notice] = 'すでにクーポンが適用されております。'
-    #   render :my_cart, status: :unprocessable_entity and return
-    # end
+    @coupon = Coupon.find_by(code: params[:code])
 
-    # if @coupon.nil?
-    #   flash.now[:notice] = 'クーポンコードが誤っております。ご確認ください。'
-    #   render :my_cart, status: :unprocessable_entity and return
-    # end
+    if @coupon.nil?
+      redirect_to my_cart_path, notice: 'クーポンコードが誤っております。' and return
+    end
 
-    # if @coupon.use
-    #   @coupon.use = true
+    if @coupon.cart_id.present?
+      redirect_to my_cart_path, notice: 'すでにクーポンコードが適用されております。' and return
+    end
 
-    # @coupon.use = true
-    # @coupon.save
-    # @coupon.cart_id = current_cart.id
-    binding.pry
+    if @coupon.use == "used"
+      redirect_to my_cart_path, notice: 'このクーポンコードはすでに使用されております。' and return
+    end
+
   end
 
   def checkout
@@ -78,4 +74,3 @@ class CartsController < ApplicationController
                                      :card_number, :card_expiration, :card_cvv)
   end
 end
-.
