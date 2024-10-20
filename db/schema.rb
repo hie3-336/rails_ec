@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_15_150532) do
     t.bigint "cart_id"
     t.integer "discount", null: false
     t.string "code", null: false
-    t.boolean "use", null: false
+    t.string "use", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_coupons_on_cart_id"

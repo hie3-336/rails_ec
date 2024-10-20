@@ -25,6 +25,27 @@ class CartsController < ApplicationController
     end
   end
 
+  def apply_coupon
+    # @coupon = Coupon.find_by(code: params[:code])
+    # if @coupon.cart_id
+    #   flash.now[:notice] = 'すでにクーポンが適用されております。'
+    #   render :my_cart, status: :unprocessable_entity and return
+    # end
+
+    # if @coupon.nil?
+    #   flash.now[:notice] = 'クーポンコードが誤っております。ご確認ください。'
+    #   render :my_cart, status: :unprocessable_entity and return
+    # end
+
+    # if @coupon.use
+    #   @coupon.use = true
+
+    # @coupon.use = true
+    # @coupon.save
+    # @coupon.cart_id = current_cart.id
+    binding.pry
+  end
+
   def checkout
     @purchase = Purchase.new(purchase_params)
     @cart_items = current_cart.cart_items.includes(:item)
@@ -57,3 +78,4 @@ class CartsController < ApplicationController
                                      :card_number, :card_expiration, :card_cvv)
   end
 end
+.
