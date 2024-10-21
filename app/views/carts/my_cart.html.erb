@@ -26,12 +26,16 @@
             </li>
             <% price_total += price_subtotal %>
           <% end %>
-          <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-            <div class="text-success">
-              <h6 class="my-0">クーポン</h6>
-            </div>
-            <span class="text-success">−$5</span>
-          </li>
+          <% if @coupon.present? %>
+            <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+              <div class="text-success">
+                <h6 class="my-0">クーポン</h6>
+              </div>
+              <span class="text-success">−<%= @coupon.discount %>円</span>
+              <% price_total -= @coupon.discount %>
+              <% price_total = 0 if price_total < 0%>
+            </li>
+          <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>合計</span>
             <strong><%= price_total %>円</strong>

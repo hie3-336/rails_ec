@@ -4,6 +4,7 @@ class CartsController < ApplicationController
   def my_cart
     @purchase = Purchase.new
     @cart_items = current_cart.cart_items.includes(:item)
+    @coupon = Coupon.find_by(cart_id: current_cart.id)
   end
 
   def add_item
@@ -32,12 +33,19 @@ class CartsController < ApplicationController
       redirect_to my_cart_path, notice: 'クーポンコードが誤っております。' and return
     end
 
+    if @coupon.use == "used"
+      redirect_to my_cart_path, notice: 'このクーポンコードはすでに使用されております。' and return
+    end
+
     if @coupon.cart_id.present?
       redirect_to my_cart_path, notice: 'すでにクーポンコードが適用されております。' and return
     end
 
-    if @coupon.use == "used"
-      redirect_to my_cart_path, notice: 'このクーポンコードはすでに使用されております。' and return
+    @coupon.cart_id = current_cart.id
+    if @coupon.save
+      redirect_to request.referer, notice: 'クーポンコードを適用しました。'
+    else
+      redirect_to request.referer, notice: 'クーポンコード適用に失敗しました。'
     end
 
   end
@@ -45,16 +53,25 @@ class CartsController < ApplicationController
   def checkout
     @purchase = Purchase.new(purchase_params)
     @cart_items = current_cart.cart_items.includes(:item)
+    @coupon = Coupon.find_by(cart_id: current_cart.id)
     @cart_items.each do |cart_item|
       @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)
     end
+
     if @purchase.purchase_ditails == []
       flash.now[:notice] = 'カートには少なくとも商品を一つ追加してください。'
       render :my_cart, status: :unprocessable_entity and return
     end
+
     if @purchase.save
       CheckoutMailer.ordermail(@purchase).deliver_now
-      current_cart.destroy
+      # current_cart.destroy
+      if @coupon.present?
+        @coupon.use = "used"
+        @coupon.save
+      end
+      
+      session.delete(:cart_id)
       redirect_to root_path, notice: '商品購入ありがとうございます！'
     else
       render :my_cart, status: :unprocessable_entity, notice: '商品購入に失敗しました。'
