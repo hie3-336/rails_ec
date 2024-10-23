@@ -51,8 +51,9 @@ class CartsController < ApplicationController
   end
 
   def checkout
-    @purchase = Purchase.new(purchase_params)
     @cart_items = current_cart.cart_items.includes(:item)
+    @purchase = Purchase.new(purchase_params)
+    @purchase.cart_id = current_cart.id
     @coupon = Coupon.find_by(cart_id: current_cart.id)
     @cart_items.each do |cart_item|
       @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)

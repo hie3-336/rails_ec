@@ -10,6 +10,7 @@ module Admin
 
     def show
       @purchase = Purchase.includes(:purchase_ditails).find(params[:id])
+      # @coupon = Coupon.find_by(cart_id: current_cart.id)
     end
 
     private
