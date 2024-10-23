@@ -76,6 +76,17 @@
     <% end %>
   </tbody>
 </table>
+
+<% if @coupon.present? %>
+  <div class="m-5 container">
+    <p class="h4">クーポン適用</p>
+    <p class="h5 text-success">−<%= @coupon.discount %>円</p>
+  </div>
+  
+  <% price_total -= @coupon.discount %>
+  <% price_total = 0 if price_total < 0%>
+<% end %>
+
 <div class="m-5 container">
   <p class="h5">合計：<%= price_total %>円</p>
 </div>
