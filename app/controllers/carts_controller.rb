@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class CartsController < ApplicationController
+  before_action :set_cart_and_coupon, only: %i[my_cart checkout]
+
   def my_cart
     @purchase = Purchase.new
-    @cart_items = current_cart.cart_items.includes(:item)
-    @coupon = Coupon.find_by(cart_id: current_cart.id)
   end
 
   def add_item
@@ -29,17 +29,7 @@ class CartsController < ApplicationController
   def apply_coupon
     @coupon = Coupon.find_by(code: params[:code])
 
-    if @coupon.nil?
-      redirect_to my_cart_path, notice: 'クーポンコードが誤っております。' and return
-    end
-
-    if @coupon.use == "used"
-      redirect_to my_cart_path, notice: 'このクーポンコードはすでに使用されております。' and return
-    end
-
-    if @coupon.cart_id.present?
-      redirect_to my_cart_path, notice: 'すでにクーポンコードが適用されております。' and return
-    end
+    redirect_to my_cart_path, notice: invalid_coupon_message(@coupon) and return if invalid_coupon?(@coupon)
 
     @coupon.cart_id = current_cart.id
     if @coupon.save
@@ -47,14 +37,11 @@ class CartsController < ApplicationController
     else
       redirect_to request.referer, notice: 'クーポンコード適用に失敗しました。'
     end
-
   end
 
   def checkout
-    @cart_items = current_cart.cart_items.includes(:item)
     @purchase = Purchase.new(purchase_params)
     @purchase.cart_id = current_cart.id
-    @coupon = Coupon.find_by(cart_id: current_cart.id)
     @cart_items.each do |cart_item|
       @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)
     end
@@ -65,13 +52,12 @@ class CartsController < ApplicationController
     end
 
     if @purchase.save
-      CheckoutMailer.ordermail(@purchase,@coupon).deliver_now
-      # current_cart.destroy
+      CheckoutMailer.ordermail(@purchase, @coupon).deliver_now
       if @coupon.present?
-        @coupon.use = "used"
+        @coupon.use = 'used'
         @coupon.save
       end
-      
+
       session.delete(:cart_id)
       redirect_to root_path, notice: '商品購入ありがとうございます！'
     else
@@ -81,10 +67,27 @@ class CartsController < ApplicationController
 
   private
 
+  def set_cart_and_coupon
+    @cart_items = current_cart.cart_items.includes(:item)
+    @coupon = Coupon.find_by(cart_id: current_cart.id)
+  end
+
   def current_cart
     current_cart = Cart.find_or_create_by(id: session[:cart_id])
     session[:cart_id] = current_cart.id
     current_cart
+  end
+
+  # Rubocopの指摘対応のため、クーポンエラー対応部分を切り出し
+  def invalid_coupon?(coupon)
+    coupon.nil? || coupon.use == 'used' || coupon.cart_id.present?
+  end
+
+  def invalid_coupon_message(coupon)
+    return 'クーポンコードが誤っております。' if coupon.nil?
+    return 'このクーポンコードはすでに使用されております。' if coupon.use == 'used'
+
+    'すでにクーポンコードが適用されております。' if coupon.cart_id.present?
   end
 
   def purchase_params
