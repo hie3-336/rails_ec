@@ -26,20 +26,31 @@
             </li>
             <% price_total += price_subtotal %>
           <% end %>
+          <% if @coupon.present? %>
+            <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+              <div class="text-success">
+                <h6 class="my-0">クーポン</h6>
+              </div>
+              <span class="text-success">−<%= @coupon.discount %>円</span>
+              <% price_total -= @coupon.discount %>
+              <% price_total = 0 if price_total < 0%>
+            </li>
+          <% end %>
           <li class="list-group-item d-flex justify-content-between">
             <span>合計</span>
             <strong><%= price_total %>円</strong>
           </li>
         </ul>
         <%= link_to "カート削除", delete_cart_path, class: "btn btn-danger" %>
-        <form class="card p-2">
+        <h5 class="m-3">クーポンコード</h5>
+        <%= form_with url: apply_coupon_path, method: :get do |form| %>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="プロモーションコード">
+            <%= form.text_field :code, class: "form-control" %>
             <div class="input-group-append">
-              <button type="submit" class="btn btn-secondary">適用</button>
+              <%= form.submit "適用", class: "btn btn-secondary" %>
             </div>
           </div>
-        </form>
+        <% end %>
       </div>
       <div class="col-md-8 order-md-1">
         <h4 class="mb-3">請求先情報</h4>
@@ -125,7 +136,7 @@
             </div>
           </div>
           <hr class="mb-4">
-          <%= form.submit "登録する", class: "btn btn-primary btn-lg btn-block" %>
+          <%= form.submit "購入を確定する", class: "btn btn-primary btn-lg btn-block" %>
         <% end %>
       </div>
     </div>

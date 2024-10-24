@@ -2,4 +2,6 @@
 
 class Cart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
+  has_one :coupon, dependent: :nullify
+  has_one :purchase, dependent: :nullify
 end

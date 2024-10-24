@@ -20,6 +20,13 @@
 -------------
 <% end %>
 
+<% if @coupon.present? %>
+クーポン適用
+−<%= @coupon.discount %>円
+<% price_total -= @coupon.discount %>
+<% price_total = 0 if price_total < 0%>
+<% end %>
+
 合計：<%= price_total %>
 
 hie's shop

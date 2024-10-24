@@ -2,6 +2,7 @@
 
 class Purchase < ApplicationRecord
   has_many :purchase_ditails, dependent: :nullify
+  belongs_to :cart
 
   validates :first_name, presence: true
   validates :last_name, presence: true
