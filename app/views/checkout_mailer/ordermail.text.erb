@@ -1,4 +1,3 @@
-<% price_total = 0 %>
 ご注文いただきありがとうございます
 
 ■■購入者情報■■
@@ -15,8 +14,7 @@
 商品名：<%= purchase_ditail.name %>
 価格：<%= purchase_ditail.price %>
 購入数量：<%= purchase_ditail.count %>
-小計：<%= price_subtotal = purchase_ditail.price * purchase_ditail.count %>
-<% price_total += price_subtotal %>
+小計：<%= purchase_ditail.price * purchase_ditail.count %>
 -------------
 <% end %>
 
@@ -25,6 +23,6 @@
 −<%= @purchase.coupon.discount %>円
 <% end %>
 
-合計：<%= price_total %>
+合計：<%= @purchase.total_price %>
 
 hie's shop

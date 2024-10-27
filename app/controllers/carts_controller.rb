@@ -42,6 +42,8 @@ class CartsController < ApplicationController
   def checkout
     @purchase = Purchase.new(purchase_params)
     @purchase.cart_id = current_cart.id
+    @purchase.total_price = @total_price
+
     @cart_items.each do |cart_item|
       @purchase.purchase_ditails.build(name: cart_item.item.name, price: cart_item.item.price, count: cart_item.count)
     end
@@ -70,6 +72,15 @@ class CartsController < ApplicationController
   def set_cart_and_coupon
     @cart_items = current_cart.cart_items.includes(:item)
     @coupon = current_cart.coupon
+    @total_price = 0
+    @cart_items.each do |cart_item|
+      @total_price += cart_item.item.price * cart_item.count
+    end
+
+    if @coupon.present?
+      @total_price -= @coupon.discount
+      @total_price = 0 if @total_price < 0
+    end
   end
 
   def current_cart
