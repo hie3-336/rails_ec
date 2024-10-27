@@ -52,7 +52,7 @@ class CartsController < ApplicationController
     end
 
     if @purchase.save
-      CheckoutMailer.ordermail(@purchase, @coupon).deliver_now
+      CheckoutMailer.ordermail(@purchase).deliver_now
       if @coupon.present?
         @coupon.use = 'used'
         @coupon.save

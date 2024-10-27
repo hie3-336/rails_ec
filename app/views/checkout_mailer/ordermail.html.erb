@@ -70,11 +70,9 @@
         <% end %>
       </tbody>
     </table>
-    <% if @coupon.present? %>
+    <% if @purchase.coupon.present? %>
       <h4>クーポン適用</h4>
-      <p>−<%= @coupon.discount %>円</p>
-      <% price_total -= @coupon.discount %>
-      <% price_total = 0 if price_total < 0%>
+      <p>−<%= @purchase.coupon.discount %>円</p>
     <% end %>
     <p class="h5">合計：<%= price_total %>円</p>
   </body>
