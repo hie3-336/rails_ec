@@ -55,10 +55,9 @@ class CartsController < ApplicationController
 
     if @purchase.save
       CheckoutMailer.ordermail(@purchase).deliver_now
-      if @coupon.present?
-        @coupon.is_used = true
-        @coupon.save
-      end
+
+      # クーポンが適用されているときは「使用済み」にする
+      @coupon.update(is_used: true) if @coupon.present?
 
       session.delete(:cart_id)
       redirect_to root_path, notice: '商品購入ありがとうございます！'
@@ -72,15 +71,17 @@ class CartsController < ApplicationController
   def set_cart_and_coupon
     @cart_items = current_cart.cart_items.includes(:item)
     @coupon = current_cart.coupon
+
+    # 以下、合計金額算出部分
     @total_price = 0
     @cart_items.each do |cart_item|
       @total_price += cart_item.item.price * cart_item.count
     end
 
-    if @coupon.present?
-      @total_price -= @coupon.discount
-      @total_price = 0 if @total_price < 0
-    end
+    return if @coupon.blank?
+
+    @total_price -= @coupon.discount
+    @total_price = 0 if @total_price.negative?
   end
 
   def current_cart
