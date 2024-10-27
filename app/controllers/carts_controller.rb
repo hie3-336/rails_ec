@@ -69,7 +69,7 @@ class CartsController < ApplicationController
 
   def set_cart_and_coupon
     @cart_items = current_cart.cart_items.includes(:item)
-    @coupon = Coupon.find_by(cart_id: current_cart.id)
+    @coupon = current_cart.coupon
   end
 
   def current_cart
