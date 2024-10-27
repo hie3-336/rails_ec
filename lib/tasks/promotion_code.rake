@@ -5,7 +5,7 @@ namespace :promotion_code do
   task generate: :environment do
     10.times do
       coupon = Coupon.new(cart_id: nil, discount: rand(1..10) * 100, code: SecureRandom.alphanumeric(7),
-                          use: 'unused')
+                          is_used: false)
       coupon.save
     end
   end

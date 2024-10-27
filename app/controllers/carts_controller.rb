@@ -54,7 +54,7 @@ class CartsController < ApplicationController
     if @purchase.save
       CheckoutMailer.ordermail(@purchase).deliver_now
       if @coupon.present?
-        @coupon.use = 'used'
+        @coupon.is_used = true
         @coupon.save
       end
 
@@ -80,12 +80,12 @@ class CartsController < ApplicationController
 
   # Rubocopの指摘対応のため、クーポンエラー対応部分を切り出し
   def invalid_coupon?(coupon)
-    coupon.nil? || coupon.use == 'used' || coupon.cart_id.present?
+    coupon.nil? || coupon.is_used || coupon.cart_id.present?
   end
 
   def invalid_coupon_message(coupon)
     return 'クーポンコードが誤っております。' if coupon.nil?
-    return 'このクーポンコードはすでに使用されております。' if coupon.use == 'used'
+    return 'このクーポンコードはすでに使用されております。' if coupon.is_used
 
     'すでにクーポンコードが適用されております。' if coupon.cart_id.present?
   end

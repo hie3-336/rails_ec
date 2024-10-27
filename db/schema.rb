@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_22_125319) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_075803) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,7 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_22_125319) do
     t.bigint "cart_id"
     t.integer "discount", null: false
     t.string "code", null: false
-    t.string "use", null: false
+    t.boolean "is_used", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_coupons_on_cart_id"
