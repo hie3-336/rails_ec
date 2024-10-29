@@ -73,10 +73,12 @@ class CartsController < ApplicationController
     @coupon = current_cart.coupon
 
     # 以下、合計金額算出部分
-    @total_price = 0
-    @cart_items.each do |cart_item|
-      @total_price += cart_item.item.price * cart_item.count
-    end
+    # @total_price = 0
+    # @cart_items.each do |cart_item|
+    #   @total_price += cart_item.item.price * cart_item.count
+    # end
+
+    @total_price = @cart_items.inject(0) { |sum, cart_item| sum + cart_item.item.price * cart_item.count }
 
     return if @coupon.blank?
 
@@ -92,14 +94,14 @@ class CartsController < ApplicationController
 
   # Rubocopの指摘対応のため、クーポンエラー対応部分を切り出し
   def invalid_coupon?(coupon)
-    coupon.nil? || coupon.is_used || coupon.cart_id.present?
+    coupon.nil? || coupon.is_used || current_cart.coupon.present?
   end
 
   def invalid_coupon_message(coupon)
     return 'クーポンコードが誤っております。' if coupon.nil?
-    return 'このクーポンコードはすでに使用されております。' if coupon.is_used
+    return 'すでにクーポンコードが適用されております。' if current_cart.coupon.present?
 
-    'すでにクーポンコードが適用されております。' if coupon.cart_id.present?
+    'このクーポンコードはすでに使用されております。' if coupon.is_used
   end
 
   def purchase_params
