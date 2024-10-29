@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_10_04_160302) do
+ActiveRecord::Schema[7.0].define(version: 2024_10_27_084717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_160302) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "coupons", force: :cascade do |t|
+    t.bigint "cart_id"
+    t.integer "discount", null: false
+    t.string "code", null: false
+    t.boolean "is_used", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_coupons_on_cart_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.string "name"
     t.string "description"
@@ -89,6 +99,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_160302) do
     t.string "card_cvv", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "cart_id"
+    t.integer "total_price", default: 0, null: false
+    t.index ["cart_id"], name: "index_purchases_on_cart_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -103,5 +116,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_04_160302) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "items"
+  add_foreign_key "coupons", "carts"
   add_foreign_key "purchase_ditails", "purchases"
+  add_foreign_key "purchases", "carts"
 end

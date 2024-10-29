@@ -14,7 +14,6 @@
     </style>
   </head>
   <body>
-    <% price_total = 0 %>
     <h1>ご注文いただきありがとうございます</h1>
     <h3>hie's shop</h3>
     <h3>購入者情報</h3>
@@ -64,12 +63,15 @@
             <td><%= purchase_ditail.name %></td>
             <td><%= purchase_ditail.price %></td>
             <td><%= purchase_ditail.count %></td>
-            <td><%= price_subtotal = purchase_ditail.price * purchase_ditail.count %></td>
+            <td><%= purchase_ditail.price * purchase_ditail.count %></td>
           </tr>
-          <% price_total += price_subtotal %>
         <% end %>
       </tbody>
     </table>
-    <p class="h5">合計：<%= price_total %>円</p>
+    <% if @purchase.coupon.present? %>
+      <h4>クーポン適用</h4>
+      <p>−<%= @purchase.coupon.discount %>円</p>
+    <% end %>
+    <p class="h5">合計：<%= @purchase.total_price %>円</p>
   </body>
 </html>
