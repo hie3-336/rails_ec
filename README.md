@@ -1,6 +1,6 @@
 # README
 
-Railsにより作成したRailsのデモです。
+Railsにより作成したECサイトのデモです。
 
 # 本番環境
 
