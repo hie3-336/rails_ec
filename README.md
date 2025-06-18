@@ -6,6 +6,9 @@ Railsにより作成したECサイトのデモです。
 
 https://floating-springs-01753-38230b9c7601.herokuapp.com/
 
+## デモ動画
+https://github.com/user-attachments/assets/95d44ad1-1733-428d-bcd5-6928f12ffc43
+
 ## 実装の特徴
 - Rails 7.0.8.4 で開発
 - 画像保存はActiveStorageを使用 保存先はAWS S3
